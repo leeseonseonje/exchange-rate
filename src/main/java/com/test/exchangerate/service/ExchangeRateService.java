@@ -1,18 +1,19 @@
 package com.test.exchangerate.service;
 
 import com.test.exchangerate.api.ExchangeRateInfo;
+import com.test.exchangerate.domain.ExchangeRate;
+import com.test.exchangerate.repository.ExchangeRateRepository;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class ExchangeRateService {
 
-    private final ExchangeRateInfo exchangeRateInfo;
+    private final ExchangeRateRepository exchangeRateRepository;
 
-    public void getExchangeRate() throws ParseException {
-        exchangeRateInfo.getExchangeRate();
+    public ExchangeRate getExchangeRate(String recipientCountry) {
+        return exchangeRateRepository.findByRecipientCountry(recipientCountry);
     }
 
 }

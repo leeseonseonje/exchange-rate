@@ -11,14 +11,17 @@ public class ExchangeRateApiUrl {
     private String recipientCountry;
 
     public ExchangeRateApiUrl(String accessKey) {
-        this.url = "http://api.currencylayer.com/live?access_key=";
+        this.url = "http://api.currencylayer.com/live";
         this.accessKey = accessKey;
-        this.currency = "&source=" + Currency.USD;
-        this.recipientCountry = "&currencies=" + RecipientCountry.recipientCountries();
+        this.currency = Currency.USD.getCurrency();
+        this.recipientCountry = RecipientCountry.recipientCountries();
     }
 
     @Override
     public String toString() {
-        return url + accessKey + currency + recipientCountry;
+        return url +
+                "?access_key=" + accessKey +
+                "&source=" + currency +
+                "&currencies=" + recipientCountry;
     }
 }

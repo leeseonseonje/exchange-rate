@@ -1,16 +1,18 @@
 package com.test.exchangerate.controller;
 
 import com.test.exchangerate.api.ExchangeRateInfo;
+import com.test.exchangerate.domain.ExchangeRate;
+import com.test.exchangerate.service.ExchangeRateService;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
 public class ExchangeRateController {
 
-    private final ExchangeRateInfo exchangeRateInfo;
+    private final ExchangeRateService exchangeRateService;
 
     @GetMapping("/")
     public String hello() {
@@ -18,9 +20,8 @@ public class ExchangeRateController {
     }
 
     @GetMapping("/exchange-rate")
-    public String test() throws ParseException {
-        exchangeRateInfo.getExchangeRate();
-
-        return "ok";
+    public String exchangeRateInfo(@RequestParam String recipientCountry) {
+        ExchangeRate exchangeRate = exchangeRateService.getExchangeRate(recipientCountry);
+        return exchangeRate.getRecipientCountry() + exchangeRate.getExchangeRate();
     }
 }

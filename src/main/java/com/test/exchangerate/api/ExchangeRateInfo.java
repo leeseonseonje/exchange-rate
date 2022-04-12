@@ -1,8 +1,8 @@
 package com.test.exchangerate.api;
 
-import org.json.simple.parser.ParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface ExchangeRateInfo {
 
-    public void getExchangeRate() throws ParseException;
+    void getExchangeRate();
 }
