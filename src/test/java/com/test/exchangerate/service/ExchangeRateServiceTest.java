@@ -40,7 +40,7 @@ class ExchangeRateServiceTest {
 
         ExchangeRate exchangeRate = initData();
 
-        exchangeRate.amountReceivedCalc(BigDecimal.valueOf(100));
+        exchangeRate.calculateAmountReceived(BigDecimal.valueOf(100));
 
     }
 

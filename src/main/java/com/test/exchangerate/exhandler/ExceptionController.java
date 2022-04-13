@@ -1,6 +1,7 @@
 package com.test.exchangerate.exhandler;
 
 import com.test.exchangerate.controller.ExchangeRateController;
+import com.test.exchangerate.exhandler.exception.NoRecipientCountryException;
 import com.test.exchangerate.exhandler.exception.NotValid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,8 @@ import static org.springframework.http.HttpStatus.*;
 public class ExceptionController {
 
     @ResponseStatus(BAD_REQUEST)
-    @ExceptionHandler(IllegalArgumentException.class)
-    public String illegalArgumentExceptionHandler(IllegalArgumentException e) {
+    @ExceptionHandler(NoRecipientCountryException.class)
+    public String noRecipientCountryExceptionHandler(NoRecipientCountryException e) {
         return e.getMessage();
     }
 

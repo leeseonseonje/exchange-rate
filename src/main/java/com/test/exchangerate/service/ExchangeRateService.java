@@ -23,7 +23,7 @@ public class ExchangeRateService {
         ExchangeRate findExchangeRete = exchangeRateRepository
                 .findByRecipientCountry(exchangeRateDto.getRecipientCountry());
 
-        String amountReceived = findExchangeRete.amountReceivedCalc(exchangeRateDto.getRemittance());
+        String amountReceived = findExchangeRete.calculateAmountReceived(exchangeRateDto.getRemittance());
 
         return ResponseAmountReceivedDto.of(amountReceived, findExchangeRete.getRecipientCountry());
     }

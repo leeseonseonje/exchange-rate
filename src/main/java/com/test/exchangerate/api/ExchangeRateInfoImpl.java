@@ -13,9 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import static java.math.RoundingMode.*;
@@ -46,7 +44,7 @@ public class ExchangeRateInfoImpl implements ExchangeRateInfo {
 
         WebClient webClient = WebClient.create();
         return webClient.get()
-                .uri(new com.test.exchangerate.api.ExchangeRateApiUrl(accessKey).toString())
+                .uri(new ExchangeRateApiUrl(accessKey).toString())
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();

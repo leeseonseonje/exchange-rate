@@ -25,8 +25,8 @@ public class ExchangeRate {
                 .build();
     }
 
-    public String amountReceivedCalc(BigDecimal amount) {
-        BigDecimal amountReceived = this.exchangeRate.multiply(amount);
+    public String calculateAmountReceived(BigDecimal remittance) {
+        BigDecimal amountReceived = this.exchangeRate.multiply(remittance);
         return receivedFormat(amountReceived);
     }
 
