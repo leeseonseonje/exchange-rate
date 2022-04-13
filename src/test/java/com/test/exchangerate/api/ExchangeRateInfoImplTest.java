@@ -5,9 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ExchangeRateInfoImplTest {
@@ -17,6 +16,6 @@ class ExchangeRateInfoImplTest {
 
     @Test
     void nullTest() {
-        exchangeRateRepository.saveExchangeRateInfo(new HashMap<>());
+        exchangeRateRepository.saveExchangeRateInfo(new ArrayList<>());
     }
 }

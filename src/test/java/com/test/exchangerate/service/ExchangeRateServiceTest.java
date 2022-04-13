@@ -5,10 +5,11 @@ import com.test.exchangerate.api.ExchangeRateInfo;
 import com.test.exchangerate.domain.ExchangeRate;
 import com.test.exchangerate.domain.RecipientCountry;
 import com.test.exchangerate.repository.ExchangeRateRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -29,11 +30,24 @@ class ExchangeRateServiceTest {
     @Test
     public void findByRecipientCountry() {
 
+        ExchangeRate exchangeRate = initData();
+
+        assertThat(exchangeRate.getRecipientCountry()).isEqualTo(RecipientCountry.KRW);
+    }
+
+    @Test
+    public void amountReceived() {
+
+        ExchangeRate exchangeRate = initData();
+
+        exchangeRate.amountReceivedCalc(BigDecimal.valueOf(100));
+
+    }
+
+    private ExchangeRate initData() {
         exchangeRateInfo.getExchangeRate();
 
-        ExchangeRate krw = exchangeRateRepository.findByRecipientCountry("KRW");
-
-        assertThat(krw.getRecipientCountry()).isEqualTo("KRW");
+        return exchangeRateRepository.findByRecipientCountry(RecipientCountry.KRW);
     }
 
 }

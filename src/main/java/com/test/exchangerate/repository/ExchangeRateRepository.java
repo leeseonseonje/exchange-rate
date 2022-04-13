@@ -1,12 +1,13 @@
 package com.test.exchangerate.repository;
 
 import com.test.exchangerate.domain.ExchangeRate;
+import com.test.exchangerate.domain.RecipientCountry;
 
-import java.util.Map;
+import java.util.List;
 
 public interface ExchangeRateRepository {
 
-    void saveExchangeRateInfo(Map<String, ExchangeRate> map);
+    void saveExchangeRateInfo(List<ExchangeRate> map);
 
-    ExchangeRate findByRecipientCountry(String recipientCountry);
+    ExchangeRate findByRecipientCountry(RecipientCountry recipientCountry);
 }
