@@ -9,6 +9,7 @@ import com.test.exchangerate.repository.ExchangeRateRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -31,6 +32,7 @@ public class ExchangeRateInfoImpl implements ExchangeRateInfo {
 
     @Override
     @PostConstruct
+    @Scheduled(cron = "0 0 0 * * *", zone = "UTC")
     public void getExchangeRate() {
 
         String response = apiCall();
