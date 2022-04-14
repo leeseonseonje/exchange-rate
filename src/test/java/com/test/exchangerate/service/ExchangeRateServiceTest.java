@@ -1,6 +1,5 @@
 package com.test.exchangerate.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.test.exchangerate.api.ExchangeRateInfo;
 import com.test.exchangerate.domain.ExchangeRate;
 import com.test.exchangerate.domain.RecipientCountry;
@@ -10,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
-
-import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 class ExchangeRateServiceTest {
@@ -23,19 +20,6 @@ class ExchangeRateServiceTest {
     ExchangeRateRepository exchangeRateRepository;
 
     @Test
-    public void getExchangeRate() throws JsonProcessingException {
-        exchangeRateInfo.getExchangeRate();
-    }
-
-    @Test
-    public void findByRecipientCountry() {
-
-        ExchangeRate exchangeRate = initData();
-
-        assertThat(exchangeRate.getRecipientCountry()).isEqualTo(RecipientCountry.KRW);
-    }
-
-    @Test
     public void amountReceived() {
 
         ExchangeRate exchangeRate = initData();
@@ -45,9 +29,9 @@ class ExchangeRateServiceTest {
     }
 
     private ExchangeRate initData() {
-        exchangeRateInfo.getExchangeRate();
+
+        exchangeRateInfo.exchangeRateCall();
 
         return exchangeRateRepository.findByRecipientCountry(RecipientCountry.KRW);
     }
-
 }

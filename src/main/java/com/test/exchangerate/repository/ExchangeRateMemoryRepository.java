@@ -4,6 +4,7 @@ import com.test.exchangerate.domain.ExchangeRate;
 import com.test.exchangerate.domain.RecipientCountry;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,5 +29,10 @@ public class ExchangeRateMemoryRepository implements ExchangeRateRepository {
     @Override
     public ExchangeRate findByRecipientCountry(RecipientCountry recipientCountry) {
         return memory.get(recipientCountry);
+    }
+
+    @Override
+    public List<ExchangeRate> findAll() {
+        return new ArrayList<>(memory.values());
     }
 }

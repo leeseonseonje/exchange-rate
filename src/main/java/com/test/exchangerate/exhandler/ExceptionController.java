@@ -3,8 +3,8 @@ package com.test.exchangerate.exhandler;
 import com.test.exchangerate.controller.ExchangeRateController;
 import com.test.exchangerate.exhandler.exception.NoRecipientCountryException;
 import com.test.exchangerate.exhandler.exception.NotValid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,11 +25,16 @@ public class ExceptionController {
         return e.getMessage();
     }
 
+    @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<List<NotValid>> notValidExceptionHandler(MethodArgumentNotValidException e) {
+    public List<NotValid> notValidExceptionHandler(MethodArgumentNotValidException e) {
 
-        List<NotValid> result = e.getBindingResult().getAllErrors()
+        return e.getBindingResult().getAllErrors()
                 .stream().map(ex -> new NotValid(((FieldError) ex).getField(), ex.getDefaultMessage())).collect(toList());
-        return new ResponseEntity<>(result, BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public String parseErrorHandler(HttpMessageNotReadableException e) {
+        return "ok";
     }
 }

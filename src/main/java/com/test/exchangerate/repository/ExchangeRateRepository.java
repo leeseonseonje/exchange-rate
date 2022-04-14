@@ -10,4 +10,6 @@ public interface ExchangeRateRepository {
     void saveExchangeRateInfo(List<ExchangeRate> map);
 
     ExchangeRate findByRecipientCountry(RecipientCountry recipientCountry);
+
+    List<ExchangeRate> findAll();
 }

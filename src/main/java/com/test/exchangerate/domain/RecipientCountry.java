@@ -10,9 +10,9 @@ import java.util.Arrays;
 @Getter
 @AllArgsConstructor
 public enum RecipientCountry {
-    KRW("KRW"),
-    JPY("JPY"),
-    PHP("PHP");
+    KRW("한국"),
+    JPY("일본"),
+    PHP("필리핀");
 
     private String country;
 
