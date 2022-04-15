@@ -30,8 +30,8 @@ public class ExchangeRateInfo  {
     @Value("${exchange.rate.api.key}")
     private String accessKey;
 
-    @PostConstruct
-    @Scheduled(cron = "0 10 0 * * *", zone = "UTC")
+//    @PostConstruct
+//    @Scheduled(cron = "0 10 0 * * *", zone = "UTC")
     public void exchangeRateCall() {
 
         String response = apiCall();
