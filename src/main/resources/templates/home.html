@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="fragments/header :: header">
+    <title>환율 계산기</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <div class="flex-container">
+        <div>
+            <p><h1 style="font-size: 72px">환율 계산</h1></p>
+            <p>송금국가: 미국(USD)</p>
+                <p>
+                    <label>수취국가: </label>
+                    <select id="counties" class="form-select" aria-label="Default select example" onchange="getExchangeRate()">
+                        <option selected>수취국가를 선택해 주세요.</option>
+                        <option th:each="country : ${counties}" th:value="${country.recipientCountry}"
+                                th:text="${country.recipientCountry} + '(' + ${country.recipientCountry.getCountry()} + ')'"></option>
+                    </select>
+                </p>
+            <p>
+              <label>환율: </label>
+              <label id="exchangeRate"></label>
+            </p>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">송금액</span>
+                <input id="remittance" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <button onclick="calculateExchangeRate()" type="button" class="btn btn-primary">송금하기</button>
+        </div>
+    </div>
+</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.js"></script>
+    <script>
+        function getExchangeRate() {
+            let selectCounty = document.getElementById("counties");
+            let county = selectCounty.options[selectCounty.selectedIndex].value;
+            axios({
+                method: "get",
+                url: "/exchange-rate/" + county
+            })
+                .then(response => {
+                    let result = response.data.exchangeRate + " " + response.data.recipientCountry + "/USD";
+                    document.getElementById("exchangeRate").innerText = result;
+                });
+        }
+
+        function calculateExchangeRate() {
+            let selectCounty = document.getElementById("counties");
+            let country = selectCounty.options[selectCounty.selectedIndex].value;
+            let remittance = document.getElementById("remittance").value;
+            console.log(country);
+            console.log(remittance);
+
+            axios({
+                method: "post",
+                url: "/exchange-rate",
+                data: {
+                    recipientCountry : country,
+                    remittance: remittance
+                }
+            })
+            .then(response=>{
+                alert(response.data.amountReceived + response.data.recipientCountry);
+            })
+            .catch(error=>{
+                console.log(error.toJSON());
+                alert(error.response.data);
+            })
+        }
+    </script>
+</html>

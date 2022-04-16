@@ -18,6 +18,9 @@ public class ExchangeRateMemoryRepository implements ExchangeRateRepository {
 
     @Override
     public void saveExchangeRateInfo(List<ExchangeRate> list) {
+        for (ExchangeRate exchangeRate : list) {
+            System.out.println(exchangeRate.getRecipientCountry());
+        }
         memory.putAll(listToMap(list));
     }
 
@@ -33,6 +36,7 @@ public class ExchangeRateMemoryRepository implements ExchangeRateRepository {
 
     @Override
     public List<ExchangeRate> findAll() {
+        memory.keySet().forEach(e -> System.out.println(e + " : " + memory.get(e)));
         return new ArrayList<>(memory.values());
     }
 }

@@ -22,10 +22,10 @@ public class HomeController {
 
         List<ExchangeRate> exchangeRates = exchangeRateRepository.findAll();
 
-        List<String> counties = exchangeRates.stream().map(e ->
-                e.getRecipientCountry().getCountry() + "(" + e.getRecipientCountry() + ")").collect(toList());
-
-        model.addAttribute("counties", counties);
-        return "test";
+        for (ExchangeRate exchangeRate : exchangeRates) {
+            System.out.println(exchangeRate.getRecipientCountry());
+        }
+        model.addAttribute("counties", exchangeRates);
+        return "home";
     }
 }

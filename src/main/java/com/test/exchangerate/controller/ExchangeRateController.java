@@ -1,5 +1,6 @@
 package com.test.exchangerate.controller;
 
+import com.test.exchangerate.controller.dto.ExchangeRateDto;
 import com.test.exchangerate.controller.dto.RequestAmountReceivedDto;
 import com.test.exchangerate.controller.dto.ResponseAmountReceivedDto;
 import com.test.exchangerate.domain.ExchangeRate;
@@ -17,10 +18,10 @@ public class ExchangeRateController {
 
     private final ExchangeRateService exchangeRateService;
 
-    @GetMapping()
-    public String exchangeRateInfo(@RequestParam String recipientCountry) {
-        ExchangeRate exchangeRate = exchangeRateService.getExchangeRate(RecipientCountry.valueOf(recipientCountry));
-        return exchangeRate.getRecipientCountry() + " : " + exchangeRate.getExchangeRate();
+    @GetMapping("/{recipientCountry}")
+    public ExchangeRateDto exchangeRateInfo(@PathVariable RecipientCountry recipientCountry) {
+        ExchangeRate exchangeRate = exchangeRateService.getExchangeRate(recipientCountry);
+        return new ExchangeRateDto(exchangeRate.getRecipientCountry(), exchangeRate.getExchangeRate());
     }
 
     @PostMapping()
