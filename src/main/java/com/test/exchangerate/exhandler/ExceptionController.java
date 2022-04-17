@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -18,12 +17,14 @@ public class ExceptionController {
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(IllegalRecipientCountryException.class)
     public String noRecipientCountryExceptionHandler(IllegalRecipientCountryException e) {
+        log.error("IllegalRecipientCountryException = {}", e.getMessage());
         return e.getMessage();
     }
 
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(IllegalRemittanceException.class)
     public String illegalArgumentExceptionHandler(IllegalRemittanceException e) {
+        log.error("IllegalRemittanceException = {}", e.getMessage());
         return e.getMessage();
     }
 }

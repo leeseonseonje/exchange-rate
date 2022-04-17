@@ -22,9 +22,6 @@ public class HomeController {
 
         List<ExchangeRate> exchangeRates = exchangeRateRepository.findAll();
 
-        for (ExchangeRate exchangeRate : exchangeRates) {
-            System.out.println(exchangeRate.getRecipientCountry());
-        }
         model.addAttribute("counties", exchangeRates);
         return "home";
     }
