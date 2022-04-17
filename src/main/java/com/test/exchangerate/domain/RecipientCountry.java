@@ -1,7 +1,7 @@
 package com.test.exchangerate.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.test.exchangerate.exhandler.exception.NoRecipientCountryException;
+import com.test.exchangerate.exhandler.exception.IllegalRecipientCountryException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -27,7 +27,7 @@ public enum RecipientCountry {
         try {
             return RecipientCountry.valueOf(recipientCountry.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new NoRecipientCountryException("지원하지 않는 국가입니다.");
+            throw new IllegalRecipientCountryException("지원하지 않는 국가입니다.");
         }
     }
 

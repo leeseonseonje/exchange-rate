@@ -6,67 +6,100 @@
 </head>
 <body>
     <div class="flex-container">
-        <div>
-            <p><h1 style="font-size: 72px">환율 계산</h1></p>
-            <p>송금국가: 미국(USD)</p>
-                <p>
-                    <label>수취국가: </label>
-                    <select id="counties" class="form-select" aria-label="Default select example" onchange="getExchangeRate()">
-                        <option selected>수취국가를 선택해 주세요.</option>
-                        <option th:each="country : ${counties}" th:value="${country.recipientCountry}"
-                                th:text="${country.recipientCountry} + '(' + ${country.recipientCountry.getCountry()} + ')'"></option>
-                    </select>
-                </p>
-            <p>
-              <label>환율: </label>
-              <label id="exchangeRate"></label>
-            </p>
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">송금액</span>
-                <input id="remittance" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+
+        <div style="line-height: 5vh">
+
+            <h1 style="font-size: 72px">환율 계산</h1>
+
+            <div class="sub-div">
+                <label>송금국가</label>
+                <input class="form-control" type="text" value="미국(USD)" aria-label="Disabled input example" size="60" disabled readonly>
             </div>
 
-            <button onclick="calculateExchangeRate()" type="button" class="btn btn-primary">송금하기</button>
+            <div id="div-counties" class="sub-div">
+                <label>수취국가</label>
+                <select id="counties" class="form-select" aria-label="Default select example" onchange="getExchangeRate()">
+                   <option selected disabled hidden>수취국가를 선택해 주세요.</option>
+                   <option th:each="country : ${counties}" th:value="${country.recipientCountry}"
+                           th:text="${country.recipientCountry} + '(' + ${country.recipientCountry.getCountry()} + ')'"></option>
+                    <option value="DSA">zzzz</option>
+                </select>
+            </div>
+
+            <div class="sub-div">
+              <label>환율</label>
+              <input id="exchangeRate" class="form-control" type="text" value="" aria-label="Disabled input example" disabled readonly>
+            </div>
+
+            <div class="sub-div">
+                <label>송금액</label>
+                <div class="input-group mb-3">
+                    <input id="remittance" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="1달러 ~ 10000달러만 송금 가능합니다.">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">USD</span>
+                </div>
+            </div>
+
+            <div class="sub-div">
+                <button type="button" class="btn btn-primary btn-lg" onclick="calculateExchangeRate()">송금하기</button>
+            </div>
+
+            <div class="sub-div">
+                <p id="result" style="font-size: 18px"></p>
+            </div>
         </div>
     </div>
 </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.js"></script>
     <script>
         function getExchangeRate() {
+            let error = document.getElementById("countySelectError");
+            if (error != null) {
+                error.remove();
+            }
             let selectCounty = document.getElementById("counties");
             let county = selectCounty.options[selectCounty.selectedIndex].value;
+            console.log(county);
             axios({
                 method: "get",
                 url: "/exchange-rate/" + county
             })
-                .then(response => {
-                    let result = response.data.exchangeRate + " " + response.data.recipientCountry + "/USD";
-                    document.getElementById("exchangeRate").innerText = result;
-                });
+            .then(response => {
+                document.getElementById("exchangeRate").value = response.data.exchangeRate + " " + response.data.recipientCountry + "/USD";
+            })
+            .catch(error => {
+                let div = document.getElementById("div-counties");
+                let p = document.createElement("label");
+                p.id = "countySelectError";
+                p.style.color = "red";
+                p.innerHTML = error.response.data;
+                div.appendChild(p);
+            })
         }
 
         function calculateExchangeRate() {
             let selectCounty = document.getElementById("counties");
             let country = selectCounty.options[selectCounty.selectedIndex].value;
             let remittance = document.getElementById("remittance").value;
-            console.log(country);
-            console.log(remittance);
-
+            let result = document.getElementById("result");
+            console.log(typeof remittance);
+            if (!/^[0-9]+$/.test(remittance)) {
+                result.style.color = "red";
+                result.innerHTML = "바르지 않은 송금액입니다.";
+                return;
+            }
             axios({
-                method: "post",
-                url: "/exchange-rate",
-                data: {
-                    recipientCountry : country,
-                    remittance: remittance
-                }
+                method: "get",
+                url: "/exchange-rate/" + country + "/" + remittance
             })
-            .then(response=>{
-                alert(response.data.amountReceived + response.data.recipientCountry);
-            })
-            .catch(error=>{
-                console.log(error.toJSON());
-                alert(error.response.data);
-            })
+                .then(response => {
+                    result.style.color = "black";
+                    result.innerHTML =
+                        "수취금액은 " + response.data.amountReceived + " " + response.data.recipientCountry + " " + "입니다.";
+                })
+                .catch(error => {
+                    result.style.color = "red";
+                    result.innerHTML = error.response.data;
+                });
         }
     </script>
 </html>
