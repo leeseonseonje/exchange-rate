@@ -1,5 +1,6 @@
 package com.test.exchangerate.repository;
 
+import com.test.exchangerate.api.ExchangeRateInfo;
 import com.test.exchangerate.domain.ExchangeRate;
 import com.test.exchangerate.domain.RecipientCountry;
 import org.assertj.core.api.Assertions;
@@ -16,6 +17,9 @@ class ExchangeRateMemoryRepositoryTest {
 
     @Autowired
     ExchangeRateRepository exchangeRateRepository;
+
+    @Autowired
+    ExchangeRateInfo exchangeRateInfo;
 
     @Test
     void findByRecipientCountry() {

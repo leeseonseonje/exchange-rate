@@ -22,7 +22,7 @@
                    <option selected disabled hidden>수취국가를 선택해 주세요.</option>
                    <option th:each="country : ${counties}" th:value="${country.recipientCountry}"
                            th:text="${country.recipientCountry} + '(' + ${country.recipientCountry.getCountry()} + ')'"></option>
-                    <option value="DSA">zzzz</option>
+                    <option value="error">Error</option>
                 </select>
             </div>
 
@@ -82,7 +82,7 @@
             let remittance = document.getElementById("remittance").value;
             let result = document.getElementById("result");
             console.log(typeof remittance);
-            if (!/^[0-9]+$/.test(remittance)) {
+            if (!/^-[0-9]+$/.test(remittance)) {
                 result.style.color = "red";
                 result.innerHTML = "바르지 않은 송금액입니다.";
                 return;

@@ -13,7 +13,7 @@ class ExchangeRateInfoTest {
     ExchangeRateInfo exchangeRateInfo;
 
     @Test
-    public void getExchangeRate() throws JsonProcessingException {
+    public void getExchangeRate() {
         exchangeRateInfo.exchangeRateCall();
     }
 }

@@ -18,7 +18,7 @@ public class ExchangeRateController {
     private final ExchangeRateService exchangeRateService;
 
     @GetMapping("/{recipientCountry}")
-    public ExchangeRateDto exchangeRateInfo(@PathVariable String recipientCountry) {
+    public ExchangeRateDto getExchangeRate(@PathVariable String recipientCountry) {
         ExchangeRate exchangeRate = exchangeRateService.getExchangeRate(RecipientCountry.from(recipientCountry));
         return new ExchangeRateDto(exchangeRate.getRecipientCountry(), exchangeRate.getExchangeRate());
     }
