@@ -25,7 +25,6 @@ class ExchangeRateServiceTest {
         ExchangeRate exchangeRate = initData();
 
         exchangeRate.calculateAmountReceived(BigDecimal.valueOf(100));
-
     }
 
     private ExchangeRate initData() {

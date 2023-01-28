@@ -52,7 +52,7 @@ public class ExchangeRateInfo  {
     }
 
     private List<ExchangeRate> exchangeRateInfoMapping(String response) {
-
+        System.out.println("response = " + response);
         ExchangeRateApiDto dto = null;
         try {
             dto = new ObjectMapper().readValue(response, ExchangeRateApiDto.class);

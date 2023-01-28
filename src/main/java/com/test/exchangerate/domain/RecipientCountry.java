@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 @Getter
 @AllArgsConstructor
